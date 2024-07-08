@@ -1,0 +1,53 @@
+{
+	"name": "nestjs-learn",
+	// "build": {
+	// 	"dockerfile": "Dockerfile"
+	// },
+    "remoteUser": "node",
+    "shutdownAction": "stopCompose",
+    "service": "main",
+    "workspaceFolder": "/workspaces/nestjs-learn",
+    "dockerComposeFile": "docker-compose.yaml",
+	
+    "customizations": {
+        "vscode" : {
+            "extensions": [
+				"formulahendry.auto-close-tag",
+				"formulahendry.auto-rename-tag",
+				"alefragnani.Bookmarks",
+				"mikestead.dotenv",
+				"formulahendry.auto-complete-tag",
+				"lafe.contextualduplicate",
+				"Terrastruct.d2",
+				"matt-meyers.vscode-dbml",
+				"dbaeumer.vscode-eslint",
+				"octref.vetur",
+				"eamodio.gitlens",
+				"bierner.color-info",
+				"leizongmin.node-module-intellisense",
+				"DanielSanMedium.dscodegpt",
+				"Gruntfuggly.todo-tree"
+			],
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/zsh"
+            }
+        }
+    },
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [
+		8080
+	],
+	"mounts": [
+		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+	],
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [8000],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": {
+		"configure-docker": "sudo chown $(whoami) /var/run/docker.sock",
+		"chmod-ssh": "sudo chmod -R 700 ~/.ssh",
+		"chown-modules" : "sudo chown node node_modules"
+	}
+}

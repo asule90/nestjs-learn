@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  main:
+    build: .
+    volumes:
+      - ..:/workspaces/nestjs-learn:cached
+      - ~/.ssh:/home/node/.ssh
+      - nestjs-learn-node_modules:/workspaces/nestjs-learn/node_modules
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+volumes:
+  nestjs-learn-node_modules:
