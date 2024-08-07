@@ -21,12 +21,12 @@
 				"Terrastruct.d2",
 				"matt-meyers.vscode-dbml",
 				"dbaeumer.vscode-eslint",
-				"octref.vetur",
 				"eamodio.gitlens",
 				"bierner.color-info",
 				"leizongmin.node-module-intellisense",
 				"DanielSanMedium.dscodegpt",
-				"Gruntfuggly.todo-tree"
+				"Gruntfuggly.todo-tree",
+				"pmneo.tsimporter"
 			],
             "settings": {
                 "terminal.integrated.shell.linux": "/bin/zsh"
@@ -35,7 +35,8 @@
     },
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
-		8080
+		8080,
+		3000
 	],
 	"mounts": [
 		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
