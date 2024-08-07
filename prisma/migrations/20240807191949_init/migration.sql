@@ -20,11 +20,11 @@ CREATE TABLE "Gift" (
     "name" VARCHAR(100) NOT NULL,
     "description" TEXT NOT NULL,
     "stock" INTEGER NOT NULL,
-    "Price" INTEGER NOT NULL,
+    "price" INTEGER NOT NULL,
     "reviewCount" INTEGER NOT NULL,
     "image1" TEXT NOT NULL,
     "badge" "EnumBadge",
-    "rating" DECIMAL(65,30) NOT NULL,
+    "rating" DECIMAL(2,1) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

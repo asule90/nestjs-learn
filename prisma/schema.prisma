@@ -35,11 +35,11 @@ model Gift {
   name          String      @db.VarChar(100)
   description   String      
   stock         Int         
-  Price         Int         
+  price         Int         
   reviewCount   Int         
   image1        String
   badge         EnumBadge?
-  rating        Decimal     @db.Decimal(65,30)
+  rating        Decimal     @db.Decimal(2,1)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 }
