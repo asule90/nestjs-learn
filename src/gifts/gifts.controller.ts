@@ -1,44 +1,70 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Inject, Logger } from '@nestjs/common';
-import { CreateGiftDto } from './dto/create-gift.dto';
-import { UpdateGiftDto } from './dto/update-gift.dto';
+import { Controller, Get, Query, Inject, Post, Body } from '@nestjs/common';
 import { GiftsService } from './gifts.service.interface';
 import { QueryGiftDto } from './dto/query-gift.dto';
-import { PagingResponseDTO, ResponseDTO } from 'src/utils/http/response.dto';
+import {
+  ErrorResponseDTO,
+  PagingResponseDTO,
+  ResponseDTO,
+  SuccessResponseDTO,
+} from 'src/utils/http/response.dto';
+import { CreateGiftDto } from './dto/create-gift.dto';
+import { AppException } from 'src/utils/exception/app.exception';
 
 @Controller('gifts')
 export class GiftsController {
-
   constructor(@Inject('GiftsService') private readonly service: GiftsService) {}
-  // constructor(@Inject('IGiftsService') private giftsService: IGiftsService) {}
 
-  // @Post()
-  // create(@Body() createGiftDto: CreateGiftDto) {
-  //   return this.giftsService.create(createGiftDto);
-  // }
+  @Post()
+  async create(@Body() dto: CreateGiftDto) {
+    try {
+      const entity = await this.service.create(dto);
+
+      return new SuccessResponseDTO({
+        message: 'success creating gift data',
+        data: entity,
+      });
+    } catch (error) {
+      if (error instanceof AppException) {
+        return new ErrorResponseDTO({
+          message: error.message,
+        });
+      } else {
+        throw error;
+      }
+    }
+  }
 
   @Get()
   async findAll(@Query() query: QueryGiftDto) {
+    try {
+      const { items, total } = await this.service.findAll(query);
 
-    const {items, total} = await this.service.findAll(query);
+      const paging: PagingResponseDTO = {
+        currentPage: query.page,
+        totalPages: Math.ceil(total / query.limit),
+        pageSize: query.limit,
+        totalCount: total,
+      };
 
-    const paging: PagingResponseDTO = {
-      currentPage: query.page,
-      totalPages: Math.ceil(total / query.limit),
-      pageSize: query.limit,
-      totalCount: total,
-    };
-
-    return new ResponseDTO({
-      success: true,
-      message: 'success fetching gift data',
-      data: items,
-      paging: paging,
-    });
+      return new SuccessResponseDTO({
+        message: 'success fetching gift data',
+        data: items,
+        paging: paging,
+      });
+    } catch (error) {
+      if (error instanceof AppException) {
+        return new ErrorResponseDTO({
+          message: error.message,
+        });
+      } else {
+        throw error;
+      }
+    }
   }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {
-  //   return this.giftsService.findOne(id);
+  //   return this.service.findOne(id);
   // }
 
   // @Patch(':id')

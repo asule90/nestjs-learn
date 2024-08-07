@@ -1,25 +1,26 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
-import { CreateGiftDto } from './dto/create-gift.dto';
-import { UpdateGiftDto } from './dto/update-gift.dto';
+import { Inject, Injectable } from '@nestjs/common';
 import { GiftsService } from './gifts.service.interface';
 import { Gift } from '@prisma/client';
 import { QueryGiftDto } from './dto/query-gift.dto';
 import { GiftsRepository } from './gifts.repository.interface';
+import { CreateGiftDto } from './dto/create-gift.dto';
 
 @Injectable()
-export class GiftsServiceImpl implements GiftsService{
-  private readonly logger = new Logger(GiftsServiceImpl.name);
+export class GiftsServiceImpl implements GiftsService {
+  // private readonly logger = new Logger(GiftsServiceImpl.name);
 
   constructor(@Inject('GiftsRepository') private repo: GiftsRepository) {}
 
-  // create(createGiftDto: CreateGiftDto): Promise<Gift>{
-  //   return 'This action adds a new gift';
-  // }
+  async create(createGiftDto: CreateGiftDto): Promise<Gift> {
+    return await this.repo.create(createGiftDto);
+  }
 
-  async findAll(query: QueryGiftDto): Promise<{items: Gift[], total: number}>{
+  async findAll(
+    query: QueryGiftDto,
+  ): Promise<{ items: Gift[]; total: number }> {
     const skip = (query.page - 1) * query.limit;
-    
-    let orderBy: any = {};
+
+    const orderBy: any = {};
     orderBy[query.sortBy] = query.sortOrder;
 
     return this.repo.selectAll({
