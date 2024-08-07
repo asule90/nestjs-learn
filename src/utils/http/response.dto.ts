@@ -23,3 +23,27 @@ export class ResponseDTO<T> {
     this.paging = params.paging;
   }
 }
+
+export class SuccessResponseDTO<T> extends ResponseDTO<T> {
+  constructor(params: {
+    message: string;
+    data?: T;
+    paging?: PagingResponseDTO;
+  }) {
+    super({
+      success: true,
+      message: params.message,
+      data: params.data,
+      paging: params.paging,
+    });
+  }
+}
+
+export class ErrorResponseDTO<T> extends ResponseDTO<T> {
+  constructor(params: { message: string }) {
+    super({
+      success: false,
+      message: params.message,
+    });
+  }
+}
