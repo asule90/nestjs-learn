@@ -89,7 +89,8 @@ export class GiftsServiceImpl implements GiftsService {
 
     const ratings = await this.repo.selectAllRating(entity.uuid);
     const averageRate = this.calculateAverageRate(ratings);
-    const averageRateDecimal = new Decimal(averageRate);
+    const roundedRate = Math.round(averageRate * 2) / 2
+    const averageRateDecimal = new Decimal(roundedRate);
 
     entity.rating = averageRateDecimal;
 
