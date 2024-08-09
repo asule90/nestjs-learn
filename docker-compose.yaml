@@ -7,6 +7,8 @@ services:
       - "3000:3000"
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    depends_on:
+      - postgre
 
   postgre:
     image: postgres:16-alpine3.20
