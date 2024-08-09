@@ -1,12 +1,12 @@
 import { Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { GiftsService } from './gifts.service.interface';
-import { Gift } from '@prisma/client';
+import { Gift, GiftRates } from '@prisma/client';
 import { QueryGiftDto } from './dto/query-gift.dto';
 import { GiftsRepository } from './gifts.repository.interface';
 import { CreateGiftDto } from './dto/create-gift.dto';
 import { UpdateGiftDto } from './dto/update-gift.dto';
-import { plainToInstance } from 'class-transformer';
 import { RatingGiftDto } from './dto/rating-gift.dto';
+import { Decimal } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class GiftsServiceImpl implements GiftsService {
@@ -72,6 +72,7 @@ export class GiftsServiceImpl implements GiftsService {
       throw error;
     }
 
+
     try {
       await this.repo.insertRate(entity.uuid, dto, userID);
       
@@ -83,6 +84,29 @@ export class GiftsServiceImpl implements GiftsService {
       throw error;
     }
 
+    //calculate rating
+    entity.reviewCount++;
+
+    const ratings = await this.repo.selectAllRating(entity.uuid);
+    const averageRate = this.calculateAverageRate(ratings);
+    const averageRateDecimal = new Decimal(averageRate);
+
+    entity.rating = averageRateDecimal;
+
+    const partialEntity: Partial<Gift> = entity;
+    this.repo.partialUpdate(id, partialEntity);
+
     return entity;
+  }
+
+  private calculateAverageRate(items: GiftRates[]): number {
+    if (items.length === 0) {
+      return 0; // Avoid division by zero
+    }
+  
+    const totalRate = items.reduce((sum, item) => sum + item.rating, 0);
+    const averageRate = totalRate / items.length;
+    
+    return averageRate;
   }
 }

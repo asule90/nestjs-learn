@@ -1,4 +1,4 @@
-import { EnumBadge, Gift, Prisma } from '@prisma/client';
+import { EnumBadge } from '@prisma/client';
 import { Expose } from 'class-transformer';
 import {
   IsDecimal,
@@ -24,11 +24,6 @@ export class CreateGiftDto {
   @IsInt()
   @IsPositive()
   price: number;
-
-  @Expose({ name: 'review_count' })
-  @IsInt()
-  @IsPositive()
-  reviewCount: number;
 
   @IsString()
   @Expose({ name: 'image_1' })

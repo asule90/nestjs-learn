@@ -1,9 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { GiftsRepository } from './gifts.repository.interface';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Gift, Prisma } from '@prisma/client';
+import { Gift, GiftRates, Prisma } from '@prisma/client';
 import { CreateGiftDto } from './dto/create-gift.dto';
-import { UpdateGiftDto } from './dto/update-gift.dto';
 import { RatingGiftDto } from './dto/rating-gift.dto';
 // import { AppException } from 'src/utils/exception/app.exception';
 
@@ -133,4 +132,16 @@ export class GiftsRepositoryImpl implements GiftsRepository {
       throw error;
     }
   }
+
+  async selectAllRating(id: string): Promise<GiftRates[]> {
+    const data = await this.prisma.giftRates.findMany({
+        where: {
+          giftId: id
+        },
+      });
+
+    return data;
+  }
+
+
 }

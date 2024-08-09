@@ -1,6 +1,5 @@
-import { Gift, Prisma } from '@prisma/client';
+import { Gift, GiftRates, Prisma } from '@prisma/client';
 import { CreateGiftDto } from './dto/create-gift.dto';
-import { UpdateGiftDto } from './dto/update-gift.dto';
 import { RatingGiftDto } from './dto/rating-gift.dto';
 
 export interface GiftsRepository {
@@ -23,4 +22,6 @@ export interface GiftsRepository {
   update(id: string, dto: CreateGiftDto): Promise<Gift>;
 
   insertRate(id: string, dto: RatingGiftDto, userId: string): Promise<void>;
+
+  selectAllRating(id: string): Promise<GiftRates[]>;
 }

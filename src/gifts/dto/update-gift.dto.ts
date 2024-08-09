@@ -10,7 +10,6 @@ export class UpdateGiftDto extends PartialType(CreateGiftDto) {
       description: this.description,
       stock: this.stock,
       price: this.price,
-      reviewCount: this.reviewCount,
       image1: this.image1,
       badge: this.badge,
       rating: this.rating ? new Prisma.Decimal(this.rating) : undefined,

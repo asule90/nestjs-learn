@@ -39,7 +39,7 @@ model Gift {
   description String
   stock       Int
   price       Int
-  reviewCount Int         @map("review_count")
+  reviewCount Int         @map("review_count") @default(0)
   image1      String      @map("image_1")
   badge       EnumBadge?
   rating      Decimal     @db.Decimal(2, 1)
