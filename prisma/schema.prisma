@@ -20,8 +20,8 @@ model User {
   username  String   @db.VarChar(100) @unique
   password  String   @db.VarChar(255)
   name      String   @db.VarChar(100)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 }
 
 enum EnumBadge {
@@ -36,10 +36,10 @@ model Gift {
   description   String      
   stock         Int         
   price         Int         
-  reviewCount   Int         
-  image1        String
+  reviewCount   Int         @map("review_count")
+  image1        String      @map("image_1")
   badge         EnumBadge?
   rating        Decimal     @db.Decimal(2,1)
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
 }

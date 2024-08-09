@@ -8,8 +8,8 @@ CREATE TABLE "User" (
     "username" VARCHAR(100) NOT NULL,
     "password" VARCHAR(255) NOT NULL,
     "name" VARCHAR(100) NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -21,12 +21,12 @@ CREATE TABLE "Gift" (
     "description" TEXT NOT NULL,
     "stock" INTEGER NOT NULL,
     "price" INTEGER NOT NULL,
-    "reviewCount" INTEGER NOT NULL,
-    "image1" TEXT NOT NULL,
+    "review_count" INTEGER NOT NULL,
+    "image_1" TEXT NOT NULL,
     "badge" "EnumBadge",
     "rating" DECIMAL(2,1) NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Gift_pkey" PRIMARY KEY ("uuid")
 );

@@ -39,6 +39,7 @@ export class AllExceptionFilter implements ExceptionFilter {
     }
 
     this.logger.error(`${httpStatus} ${request.method} ${request.originalUrl}`);
+    this.logger.error(errorDetails);
 
     response.status(httpStatus).json(
       new ResponseDTO({

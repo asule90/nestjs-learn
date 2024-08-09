@@ -1,5 +1,5 @@
 import { IsOptional, IsInt, Min, IsIn } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
 
 export class QueryGiftDto {
   @IsOptional()
@@ -15,10 +15,12 @@ export class QueryGiftDto {
   limit: number = 10;
 
   @IsOptional()
+  @Expose({ name: 'sort_by' })
   @IsIn(['updatedAt', 'rating'])
   sortBy: 'updatedAt' | 'rating' = 'updatedAt';
 
   @IsOptional()
+  @Expose({ name: 'sort_order' })
   @IsIn(['asc', 'desc'])
   sortOrder: 'asc' | 'desc' = 'desc';
 }
