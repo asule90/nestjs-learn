@@ -27,21 +27,14 @@ just import `docs/db_schema.sql` file.
 
 or use psql:
 ```bash
+# install postgresql-client or postgresql-client-16 first
 $ psql -U <dbuser> -h <host> <dbname> < ./docs/db_schema.sql
 ```
 
 if you use vscode, you can easily run with devcontainer just by installing devcontainer extension.
+open command palette > choose `Dev Containers: Rebuild Container`
 
 copy `.env.example` to `.env` and adjust the value as you need.
-
-```bash
-# db migrate
-$ npm run migrate
-
-# db seed
-$ npx prisma db seed
-# check ./prisma/seed/seed.ts
-```
 
 ## Running the app
 
@@ -52,6 +45,16 @@ $ npm install
 $ npm install node-gyp 
 
 $ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+
+
+# db migrate
+$ npm run migrate
 
 # create user first for mutating data
 # all gift api guarded by jwt bearer token, except read api
@@ -64,13 +67,13 @@ $ curl --location 'http://localhost:3000/users' \
     "name": "maria"
 }'
 # next, see postman doc
+```
 
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+## Run with Docker
+```
+$ docker compose up
+# or
+$ docker compose up -d
 ```
 
 
