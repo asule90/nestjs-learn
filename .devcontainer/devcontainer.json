@@ -26,7 +26,8 @@
 				"leizongmin.node-module-intellisense",
 				"DanielSanMedium.dscodegpt",
 				"Gruntfuggly.todo-tree",
-				"pmneo.tsimporter"
+				"pmneo.tsimporter",
+				"adpyke.vscode-sql-formatter"
 			],
             "settings": {
                 "terminal.integrated.shell.linux": "/bin/zsh"
