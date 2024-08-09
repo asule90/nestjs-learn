@@ -3,7 +3,10 @@ import { UserLoginDto } from './dto/login-user.dto';
 import { AuthService } from './auth.service.interface';
 import { SuccessResponseDTO } from 'utils/http/response.dto';
 import { ConfigService } from '@nestjs/config';
+import { ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   private readonly logger: Logger = new Logger(AuthController.name);

@@ -31,8 +31,10 @@ import { UpdateGiftDto } from './dto/update-gift.dto';
 import { RedeemGiftDto } from './dto/redeem-gift.dto';
 import { RatingGiftDto } from './dto/rating-gift.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
 
+@ApiTags('gifts')
 @Controller('gifts')
 export class GiftsController {
   private readonly logger = new Logger(GiftsController.name);
