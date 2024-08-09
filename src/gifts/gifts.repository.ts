@@ -3,6 +3,7 @@ import { GiftsRepository } from './gifts.repository.interface';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Gift, Prisma } from '@prisma/client';
 import { CreateGiftDto } from './dto/create-gift.dto';
+import { UpdateGiftDto } from './dto/update-gift.dto';
 // import { AppException } from 'src/utils/exception/app.exception';
 
 @Injectable()
@@ -56,7 +57,24 @@ export class GiftsRepositoryImpl implements GiftsRepository {
     }
   }
 
-  // update(id: string, updateGiftDto: UpdateGiftDto): Promise<Gift>;
+  async partialUpdate(id: string, dto: UpdateGiftDto): Promise<Gift>{
+    try {
+      return await this.prisma.gift.update({
+        where: { uuid: id },
+        data: {
+          ...dto,
+          rating: dto.rating ? new Prisma.Decimal(dto.rating) : undefined,
+        },
+      });
+    } catch (error) {
+      if (error.code === 'P2025') {
+        throw new NotFoundException();
+      }
+
+      throw error;
+    }
+  }
+
   async delete(id: string): Promise<void> {
     try {
       await this.prisma.gift.delete({
@@ -71,7 +89,7 @@ export class GiftsRepositoryImpl implements GiftsRepository {
     }
   }
   
-  async updateAll(id: string, dto: CreateGiftDto): Promise<Gift> {
+  async update(id: string, dto: CreateGiftDto): Promise<Gift> {
     try {
       return await this.prisma.gift.update({
         where: { uuid: id },

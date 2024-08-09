@@ -4,6 +4,7 @@ import { Gift } from '@prisma/client';
 import { QueryGiftDto } from './dto/query-gift.dto';
 import { GiftsRepository } from './gifts.repository.interface';
 import { CreateGiftDto } from './dto/create-gift.dto';
+import { UpdateGiftDto } from './dto/update-gift.dto';
 
 @Injectable()
 export class GiftsServiceImpl implements GiftsService {
@@ -32,16 +33,16 @@ export class GiftsServiceImpl implements GiftsService {
     return this.repo.selectOne(id);
   }
 
-  // update(id: string, updateGiftDto: UpdateGiftDto): Promise<Gift>{
-  //   return `This action updates a #${id} gift`;
-  // }
+  partialUpdate(id: string, dto: UpdateGiftDto): Promise<Gift>{
+    return this.repo.partialUpdate(id, dto);
+  }
 
   remove(id: string): Promise<void> {
     return this.repo.delete(id);
   }
 
-  async put(id: string, dto: CreateGiftDto): Promise<Gift> {
+  async update(id: string, dto: CreateGiftDto): Promise<Gift> {
     // const entity = await this.repo.selectOne(id);
-    return this.repo.updateAll(id, dto);
+    return this.repo.update(id, dto);
   }
 }

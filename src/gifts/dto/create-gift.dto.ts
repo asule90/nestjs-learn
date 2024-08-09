@@ -26,6 +26,7 @@ export class CreateGiftDto {
   reviewCount: number;
 
   @IsString()
+  @Expose({ name: 'image_1' })
   image1: string;
 
   @IsOptional()

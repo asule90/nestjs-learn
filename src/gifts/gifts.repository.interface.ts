@@ -1,5 +1,6 @@
 import { Gift, Prisma } from '@prisma/client';
 import { CreateGiftDto } from './dto/create-gift.dto';
+import { UpdateGiftDto } from './dto/update-gift.dto';
 
 export interface GiftsRepository {
   create(dto: CreateGiftDto): Promise<Gift>;
@@ -14,11 +15,9 @@ export interface GiftsRepository {
 
   selectOne(id: string): Promise<Gift>;
 
-  // update(id: string, updateGiftDto: UpdateGiftDto): Promise<Gift>;
+  partialUpdate(id: string, dto: UpdateGiftDto): Promise<Gift>;
   
   delete(id: string): Promise<void>;
 
-  updateAll(id: string, dto: CreateGiftDto): Promise<Gift>;
-
-  // ... other methods
+  update(id: string, dto: CreateGiftDto): Promise<Gift>;
 }

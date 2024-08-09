@@ -23,6 +23,7 @@ import {
 } from 'src/utils/http/response.dto';
 import { CreateGiftDto } from './dto/create-gift.dto';
 import { AppException } from 'src/utils/exception/app.exception';
+import { UpdateGiftDto } from './dto/update-gift.dto';
 
 
 @Controller('gifts')
@@ -96,15 +97,29 @@ export class GiftsController {
     }
   }
 
-  // @Patch(':id')
-  // async update(@Param('id') id: string, @Body() updateGiftDto: UpdateGiftDto) {
-  //   return this.giftsService.update(id, updateGiftDto);
-  // }
+  @Patch(':id')
+  async patch(@Param('id') id: string, @Body() updateGiftDto: UpdateGiftDto) {
+    try {
+      const entity = await this.service.partialUpdate(id, updateGiftDto);
+
+      return new SuccessResponseDTO({
+        message: 'success updating gift data',
+        data: entity,
+      });
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new HttpException({
+          message: 'Gift was not found',
+        }, HttpStatus.NOT_FOUND);
+      }
+      throw error;
+    }
+  }
 
   @Put(':id')
   async put(@Param('id') id: string, @Body() dto: CreateGiftDto) {
     try {
-      const entity = await this.service.put(id, dto);
+      const entity = await this.service.update(id, dto);
 
       return new SuccessResponseDTO({
         message: 'success updating gift data',
