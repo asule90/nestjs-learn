@@ -57,13 +57,13 @@ export class GiftsRepositoryImpl implements GiftsRepository {
     }
   }
 
-  async partialUpdate(id: string, dto: UpdateGiftDto): Promise<Gift>{
+  async partialUpdate(id: string, entity: Partial<Gift>): Promise<Gift>{
     try {
       return await this.prisma.gift.update({
         where: { uuid: id },
         data: {
-          ...dto,
-          rating: dto.rating ? new Prisma.Decimal(dto.rating) : undefined,
+          ...entity,
+          rating: entity.rating ? new Prisma.Decimal(entity.rating) : undefined,
         },
       });
     } catch (error) {

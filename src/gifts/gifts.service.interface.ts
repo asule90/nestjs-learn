@@ -10,4 +10,5 @@ export interface GiftsService {
   partialUpdate(id: string, dto: UpdateGiftDto): Promise<Gift>;
   update(id: string, dto: CreateGiftDto): Promise<Gift>;
   remove(id: string): Promise<void>;
+  redeem(id: string, qty: number): Promise<Gift>;
 }

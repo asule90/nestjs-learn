@@ -13,6 +13,8 @@ import {
   Put,
   HttpException,
   HttpStatus,
+  UnprocessableEntityException,
+  HttpCode,
 } from '@nestjs/common';
 import { GiftsService } from './gifts.service.interface';
 import { QueryGiftDto } from './dto/query-gift.dto';
@@ -22,8 +24,8 @@ import {
   SuccessResponseDTO,
 } from 'src/utils/http/response.dto';
 import { CreateGiftDto } from './dto/create-gift.dto';
-import { AppException } from 'src/utils/exception/app.exception';
 import { UpdateGiftDto } from './dto/update-gift.dto';
+import { RedeemGiftDto } from './dto/redeem-gift.dto';
 
 
 @Controller('gifts')
@@ -42,12 +44,6 @@ export class GiftsController {
         data: entity,
       });
     } catch (error) {
-      if (error instanceof AppException) {
-        return new ErrorResponseDTO({
-          message: error.message,
-        });
-      }
-      
       throw error;
     }
   }
@@ -70,11 +66,6 @@ export class GiftsController {
         paging: paging,
       });
     } catch (error) {
-      if (error instanceof AppException) {
-        return new ErrorResponseDTO({
-          message: error.message,
-        });
-      }
       throw error;
     }
   }
@@ -154,4 +145,31 @@ export class GiftsController {
       throw error;
     }
   }
+
+  @Post(':id/redeem')
+  @HttpCode(200)
+  async redeem(@Param('id') id: string, @Body() dto: RedeemGiftDto) {
+    try {
+      const entity = await this.service.redeem(id, dto.qty);
+
+      return new SuccessResponseDTO({
+        message: 'success redeemed '+dto.qty+' gift',
+        data: entity,
+      });
+    } catch (error) {
+      if (error instanceof UnprocessableEntityException) {
+        throw new HttpException({
+          message: error.message,
+        }, HttpStatus.UNPROCESSABLE_ENTITY);
+      }
+      if (error instanceof NotFoundException) {
+        throw new HttpException({
+          message: 'Gift was not found',
+        }, HttpStatus.NOT_FOUND);
+      }
+      
+      throw error;
+    }
+  }
+
 }

@@ -1,10 +1,12 @@
-import { EnumBadge } from '@prisma/client';
+import { EnumBadge, Gift, Prisma } from '@prisma/client';
 import { Expose } from 'class-transformer';
 import {
+  IsDecimal,
   IsEnum,
   IsInt,
   IsNumberString,
   IsOptional,
+  IsPositive,
   IsString,
 } from 'class-validator';
 
@@ -16,13 +18,16 @@ export class CreateGiftDto {
   description: string;
 
   @IsInt()
+  @IsPositive()
   stock: number;
 
   @IsInt()
+  @IsPositive()
   price: number;
 
   @Expose({ name: 'review_count' })
   @IsInt()
+  @IsPositive()
   reviewCount: number;
 
   @IsString()
@@ -34,5 +39,7 @@ export class CreateGiftDto {
   badge?: EnumBadge;
 
   @IsNumberString()
+  @IsDecimal({force_decimal: true})
   rating: number;
+
 }

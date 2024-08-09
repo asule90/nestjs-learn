@@ -15,7 +15,7 @@ export interface GiftsRepository {
 
   selectOne(id: string): Promise<Gift>;
 
-  partialUpdate(id: string, dto: UpdateGiftDto): Promise<Gift>;
+  partialUpdate(id: string, entity: Partial<Gift>): Promise<Gift>;
   
   delete(id: string): Promise<void>;
 
