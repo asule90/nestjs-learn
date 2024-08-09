@@ -11,6 +11,28 @@
 
 Gift service API, 
 
+Using repository pattern & Dependency Inversion Principle, so our code is flexible and maintainable, and testable.
+
+Using ResponseDto for response consistency
+
+setup logmiddleware and AllExceptionFilter to log all http requests and exceptions
+
+using prisma for db migration and ORM.
+
+Using DBML for ERD documentation.
+
+using bcrypt for password hashing. 
+
+using SnakeCaseInterceptor so response payload key always in snake_case
+
+using swagger for standard openAPI, but the response model is not yet implemented.
+
+
+### Deployment
+
+Using AWS ec2, nginx proxy manager for domain pointing, 
+run with docker compose, add EC2 security group to allow app port from nginx proxy CIDR.
+
 ### Features:
 - create user
 - login
