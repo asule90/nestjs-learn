@@ -3,7 +3,7 @@ import { CreateGiftDto } from './dto/create-gift.dto';
 
 export interface GiftsRepository {
   create(dto: CreateGiftDto): Promise<Gift>;
-  
+
   selectAll(params: {
     skip?: number;
     take?: number;
@@ -14,6 +14,6 @@ export interface GiftsRepository {
 
   selectOne(id: string): Promise<Gift>;
   // update(id: string, updateGiftDto: UpdateGiftDto): Promise<Gift>;
-  // remove(id: string): void;
+  delete(id: string): Promise<void>;
   // ... other methods
 }

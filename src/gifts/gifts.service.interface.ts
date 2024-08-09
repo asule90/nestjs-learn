@@ -7,6 +7,6 @@ export interface GiftsService {
   findAll(query: QueryGiftDto): Promise<{ items: Gift[]; total: number }>;
   findOne(id: string): Promise<Gift>;
   // update(id: string, updateGiftDto: UpdateGiftDto): Promise<Gift>;
-  // remove(id: string): void;
+  remove(id: string): Promise<void>;
   // ... other methods
 }

@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { GiftsRepository } from './gifts.repository.interface';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Gift, Prisma } from '@prisma/client';
 import { CreateGiftDto } from './dto/create-gift.dto';
+// import { AppException } from 'src/utils/exception/app.exception';
 
 @Injectable()
 export class GiftsRepositoryImpl implements GiftsRepository {
@@ -42,12 +43,32 @@ export class GiftsRepositoryImpl implements GiftsRepository {
   }
 
   async selectOne(id: string): Promise<Gift> {
-    return await this.prisma.gift.findUniqueOrThrow({
-      where: { uuid: id },
-    });
+    try {
+      return await this.prisma.gift.findUniqueOrThrow({
+        where: { uuid: id },
+      });
+    } catch (error) {
+      if (error.code === 'P2025') {
+        throw new NotFoundException();
+      }
+
+      throw error;
+    }
   }
 
   // update(id: string, updateGiftDto: UpdateGiftDto): Promise<Gift>;
-  // remove(id: string): void;
+  async delete(id: string): Promise<void> {
+    try {
+      await this.prisma.gift.delete({
+        where: { uuid: id },
+      });
+    } catch (error) {
+      if (error.code === 'P2025') {
+        throw new NotFoundException();
+      }
+
+      throw error;
+    }
+  }
   // ... other methods
 }

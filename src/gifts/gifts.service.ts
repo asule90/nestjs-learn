@@ -11,13 +11,11 @@ export class GiftsServiceImpl implements GiftsService {
 
   constructor(@Inject('GiftsRepository') private repo: GiftsRepository) {}
 
-  async create(createGiftDto: CreateGiftDto): Promise<Gift> {
-    return await this.repo.create(createGiftDto);
+  create(createGiftDto: CreateGiftDto): Promise<Gift> {
+    return this.repo.create(createGiftDto);
   }
 
-  async findAll(
-    query: QueryGiftDto,
-  ): Promise<{ items: Gift[]; total: number }> {
+  findAll(query: QueryGiftDto): Promise<{ items: Gift[]; total: number }> {
     const skip = (query.page - 1) * query.limit;
 
     const orderBy: any = {};
@@ -30,7 +28,7 @@ export class GiftsServiceImpl implements GiftsService {
     });
   }
 
-  findOne(id: string): Promise<Gift>{
+  findOne(id: string): Promise<Gift> {
     return this.repo.selectOne(id);
   }
 
@@ -38,7 +36,7 @@ export class GiftsServiceImpl implements GiftsService {
   //   return `This action updates a #${id} gift`;
   // }
 
-  // remove(id: string) {
-  //   return `This action removes a #${id} gift`;
-  // }
+  remove(id: string): Promise<void> {
+    return this.repo.delete(id);
+  }
 }
