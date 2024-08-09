@@ -13,7 +13,12 @@ export interface GiftsRepository {
   }): Promise<{ items: Gift[]; total: number }>;
 
   selectOne(id: string): Promise<Gift>;
+
   // update(id: string, updateGiftDto: UpdateGiftDto): Promise<Gift>;
+  
   delete(id: string): Promise<void>;
+
+  updateAll(id: string, dto: CreateGiftDto): Promise<Gift>;
+
   // ... other methods
 }

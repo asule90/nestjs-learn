@@ -70,5 +70,22 @@ export class GiftsRepositoryImpl implements GiftsRepository {
       throw error;
     }
   }
-  // ... other methods
+  
+  async updateAll(id: string, dto: CreateGiftDto): Promise<Gift> {
+    try {
+      return await this.prisma.gift.update({
+        where: { uuid: id },
+        data: {
+          ...dto,
+          rating: new Prisma.Decimal(dto.rating),
+        },
+      });
+    } catch (error) {
+      if (error.code === 'P2025') {
+        throw new NotFoundException();
+      }
+
+      throw error;
+    }
+  }
 }

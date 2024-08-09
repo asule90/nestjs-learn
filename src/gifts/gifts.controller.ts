@@ -9,7 +9,10 @@ import {
   Delete,
   Logger,
   NotFoundException,
-  Res,
+  Patch,
+  Put,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { GiftsService } from './gifts.service.interface';
 import { QueryGiftDto } from './dto/query-gift.dto';
@@ -20,7 +23,7 @@ import {
 } from 'src/utils/http/response.dto';
 import { CreateGiftDto } from './dto/create-gift.dto';
 import { AppException } from 'src/utils/exception/app.exception';
-import { Response } from 'express';
+
 
 @Controller('gifts')
 export class GiftsController {
@@ -42,9 +45,9 @@ export class GiftsController {
         return new ErrorResponseDTO({
           message: error.message,
         });
-      } else {
-        throw error;
       }
+      
+      throw error;
     }
   }
 
@@ -70,49 +73,67 @@ export class GiftsController {
         return new ErrorResponseDTO({
           message: error.message,
         });
-      } else {
-        throw error;
       }
+      throw error;
     }
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string, @Res() res: Response) {
+  async findOne(@Param('id') id: string) {
     try {
       const data = await this.service.findOne(id);
-      return res.status(200).json(new SuccessResponseDTO({
+      return new SuccessResponseDTO({
         message: 'success fetching gift data',
-        data: data,
-      }));
+        data: data
+      });
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).json(new ErrorResponseDTO({
+        throw new HttpException({
           message: 'Gift was not found',
-        }));
+        }, HttpStatus.NOT_FOUND);
       }
       throw error;
     }
   }
 
   // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateGiftDto: UpdateGiftDto) {
+  // async update(@Param('id') id: string, @Body() updateGiftDto: UpdateGiftDto) {
   //   return this.giftsService.update(id, updateGiftDto);
   // }
 
+  @Put(':id')
+  async put(@Param('id') id: string, @Body() dto: CreateGiftDto) {
+    try {
+      const entity = await this.service.put(id, dto);
+
+      return new SuccessResponseDTO({
+        message: 'success updating gift data',
+        data: entity,
+      });
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new HttpException({
+          message: 'Gift was not found',
+        }, HttpStatus.NOT_FOUND);
+      }
+      throw error;
+    }
+  }
+
   @Delete(':id')
-  async remove(@Param('id') id: string, @Res() res: Response) {
+  async remove(@Param('id') id: string) {
 
     try {
       await this.service.remove(id);
 
-      return res.status(200).json(new SuccessResponseDTO({
+      return new SuccessResponseDTO({
         message: 'success deleting gift data',
-      }));
+      });
     } catch (error) {
       if (error instanceof NotFoundException) {
-        return res.status(404).json(new ErrorResponseDTO({
+        throw new HttpException({
           message: 'Gift was not found',
-        }));
+        }, HttpStatus.NOT_FOUND);
       }
 
       throw error;

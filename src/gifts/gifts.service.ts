@@ -11,8 +11,8 @@ export class GiftsServiceImpl implements GiftsService {
 
   constructor(@Inject('GiftsRepository') private repo: GiftsRepository) {}
 
-  create(createGiftDto: CreateGiftDto): Promise<Gift> {
-    return this.repo.create(createGiftDto);
+  create(dto: CreateGiftDto): Promise<Gift> {
+    return this.repo.create(dto);
   }
 
   findAll(query: QueryGiftDto): Promise<{ items: Gift[]; total: number }> {
@@ -38,5 +38,10 @@ export class GiftsServiceImpl implements GiftsService {
 
   remove(id: string): Promise<void> {
     return this.repo.delete(id);
+  }
+
+  async put(id: string, dto: CreateGiftDto): Promise<Gift> {
+    // const entity = await this.repo.selectOne(id);
+    return this.repo.updateAll(id, dto);
   }
 }
