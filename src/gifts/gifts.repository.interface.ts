@@ -3,6 +3,7 @@ import { CreateGiftDto } from './dto/create-gift.dto';
 
 export interface GiftsRepository {
   create(dto: CreateGiftDto): Promise<Gift>;
+  
   selectAll(params: {
     skip?: number;
     take?: number;
@@ -11,7 +12,7 @@ export interface GiftsRepository {
     orderBy?: Prisma.GiftOrderByWithRelationInput;
   }): Promise<{ items: Gift[]; total: number }>;
 
-  // selectOne(id: string): Promise<Gift>;
+  selectOne(id: string): Promise<Gift>;
   // update(id: string, updateGiftDto: UpdateGiftDto): Promise<Gift>;
   // remove(id: string): void;
   // ... other methods

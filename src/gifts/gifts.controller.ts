@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Inject, Post, Body } from '@nestjs/common';
+import { Controller, Get, Query, Inject, Post, Body, Param } from '@nestjs/common';
 import { GiftsService } from './gifts.service.interface';
 import { QueryGiftDto } from './dto/query-gift.dto';
 import {
@@ -62,10 +62,23 @@ export class GiftsController {
     }
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.service.findOne(id);
-  // }
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    try {
+      return new SuccessResponseDTO({
+        message: 'success fetching gift data',
+        data: await this.service.findOne(id)
+      });
+    } catch (error) {
+      if (error instanceof AppException) {
+        return new ErrorResponseDTO({
+          message: error.message,
+        });
+      } else {
+        throw error;
+      }
+    }
+  }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateGiftDto: UpdateGiftDto) {

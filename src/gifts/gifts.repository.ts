@@ -41,9 +41,12 @@ export class GiftsRepositoryImpl implements GiftsRepository {
     };
   }
 
-  // selectOne(id: string): Promise<Gift> {
+  async selectOne(id: string): Promise<Gift> {
+    return await this.prisma.gift.findUniqueOrThrow({
+      where: { uuid: id },
+    });
+  }
 
-  // }
   // update(id: string, updateGiftDto: UpdateGiftDto): Promise<Gift>;
   // remove(id: string): void;
   // ... other methods

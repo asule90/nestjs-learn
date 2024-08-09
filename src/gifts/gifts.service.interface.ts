@@ -5,7 +5,7 @@ import { CreateGiftDto } from './dto/create-gift.dto';
 export interface GiftsService {
   create(createGiftDto: CreateGiftDto): Promise<Gift>;
   findAll(query: QueryGiftDto): Promise<{ items: Gift[]; total: number }>;
-  // findOne(id: string): Promise<Gift>;
+  findOne(id: string): Promise<Gift>;
   // update(id: string, updateGiftDto: UpdateGiftDto): Promise<Gift>;
   // remove(id: string): void;
   // ... other methods

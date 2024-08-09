@@ -30,11 +30,9 @@ export class GiftsServiceImpl implements GiftsService {
     });
   }
 
-  // findOne(id: string): Promise<Gift>{
-  //   return this.prisma.user.findUnique({
-  //     where: userWhereUniqueInput,
-  //   });
-  // }
+  findOne(id: string): Promise<Gift>{
+    return this.repo.selectOne(id);
+  }
 
   // update(id: string, updateGiftDto: UpdateGiftDto): Promise<Gift>{
   //   return `This action updates a #${id} gift`;
