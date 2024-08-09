@@ -25,9 +25,9 @@ make sure you have postgresql database named `postgre`.
 if you have database desktop client 
 just import `docs/db_schema.sql` file.  
 
-or use pg_dump:
+or use psql:
 ```bash
-$ pg_dump -U <dbuser> -h <host> -d <dbname> < ./docs/db_schema.sql
+$ psql -U <dbuser> -h <host> <dbname> < ./docs/db_schema.sql
 ```
 
 if you use vscode, you can easily run with devcontainer just by installing devcontainer extension.
@@ -52,6 +52,19 @@ $ npm install
 $ npm install node-gyp 
 
 $ npm run start
+
+# create user first for mutating data
+# all gift api guarded by jwt bearer token, except read api
+$ curl --location 'http://localhost:3000/users' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username": "maria",
+    "password": "guess",
+    "email" : "maria@guess.com",
+    "name": "maria"
+}'
+# next, see postman doc
+
 
 # watch mode
 $ npm run start:dev

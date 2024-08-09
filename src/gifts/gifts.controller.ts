@@ -41,6 +41,7 @@ export class GiftsController {
 
   constructor(@Inject('GiftsService') private readonly service: GiftsService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   async create(@Body() dto: CreateGiftDto) {
     try {
@@ -95,6 +96,7 @@ export class GiftsController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   async patch(@Param('id') id: string, @Body() updateGiftDto: UpdateGiftDto) {
     try {
@@ -114,6 +116,7 @@ export class GiftsController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Put(':id')
   async put(@Param('id') id: string, @Body() dto: CreateGiftDto) {
     try {
@@ -133,6 +136,7 @@ export class GiftsController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
 
@@ -153,6 +157,7 @@ export class GiftsController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Post(':id/redeem')
   @HttpCode(200)
   async redeem(@Param('id') id: string, @Body() dto: RedeemGiftDto) {
