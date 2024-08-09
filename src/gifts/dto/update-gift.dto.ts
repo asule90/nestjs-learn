@@ -11,8 +11,7 @@ export class UpdateGiftDto extends PartialType(CreateGiftDto) {
       stock: this.stock,
       price: this.price,
       image1: this.image1,
-      badge: this.badge,
-      rating: this.rating ? new Prisma.Decimal(this.rating) : undefined,
+      badge: this.badge
     };
   }
 }

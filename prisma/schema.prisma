@@ -42,7 +42,7 @@ model Gift {
   reviewCount Int         @map("review_count") @default(0)
   image1      String      @map("image_1")
   badge       EnumBadge?
-  rating      Decimal     @db.Decimal(2, 1)
+  rating      Decimal     @db.Decimal(2, 1) @default(0)
   createdAt   DateTime    @default(now()) @map("created_at")
   updatedAt   DateTime    @updatedAt @map("updated_at")
   GiftRates   GiftRates[]

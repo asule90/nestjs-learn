@@ -14,7 +14,6 @@ export class GiftsRepositoryImpl implements GiftsRepository {
     return await this.prisma.gift.create({
       data: {
         ...dto,
-        rating: new Prisma.Decimal(dto.rating),
       },
     });
   }
@@ -63,7 +62,6 @@ export class GiftsRepositoryImpl implements GiftsRepository {
         where: { uuid: id },
         data: {
           ...entity,
-          rating: entity.rating ? new Prisma.Decimal(entity.rating) : undefined,
         },
       });
     } catch (error) {
@@ -95,7 +93,6 @@ export class GiftsRepositoryImpl implements GiftsRepository {
         where: { uuid: id },
         data: {
           ...dto,
-          rating: new Prisma.Decimal(dto.rating),
         },
       });
     } catch (error) {

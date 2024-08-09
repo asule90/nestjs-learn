@@ -32,9 +32,4 @@ export class CreateGiftDto {
   @IsOptional()
   @IsEnum(EnumBadge)
   badge?: EnumBadge;
-
-  @IsNumberString()
-  @IsDecimal({force_decimal: true})
-  rating: number;
-
 }
