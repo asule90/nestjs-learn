@@ -15,6 +15,8 @@
 
 ```bash
 $ npm install
+# if you have problem with bcyprt:
+$ npm install node-gyp 
 ```
 
 ## Running the app
