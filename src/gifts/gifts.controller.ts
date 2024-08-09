@@ -15,6 +15,9 @@ import {
   HttpStatus,
   UnprocessableEntityException,
   HttpCode,
+  UseGuards,
+  Request,
+  Req,
 } from '@nestjs/common';
 import { GiftsService } from './gifts.service.interface';
 import { QueryGiftDto } from './dto/query-gift.dto';
@@ -22,10 +25,12 @@ import {
   ErrorResponseDTO,
   PagingResponseDTO,
   SuccessResponseDTO,
-} from 'src/utils/http/response.dto';
+} from 'utils/http/response.dto';
 import { CreateGiftDto } from './dto/create-gift.dto';
 import { UpdateGiftDto } from './dto/update-gift.dto';
 import { RedeemGiftDto } from './dto/redeem-gift.dto';
+import { RatingGiftDto } from './dto/rating-gift.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 
 @Controller('gifts')
@@ -165,6 +170,34 @@ export class GiftsController {
       if (error instanceof NotFoundException) {
         throw new HttpException({
           message: 'Gift was not found',
+        }, HttpStatus.NOT_FOUND);
+      }
+      
+      throw error;
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @Post(':id/rating')
+  @HttpCode(200)
+  async rating(@Request() req: Request, @Param('id') id: string, @Body() dto: RatingGiftDto) {
+    try {
+      const user: any = (req as any).user;
+      const entity = await this.service.rate(id, dto, user.sub);
+
+      return new SuccessResponseDTO({
+        message: 'success',
+        data: entity,
+      });
+    } catch (error) {
+      if (error instanceof UnprocessableEntityException) {
+        throw new HttpException({
+          message: error.message,
+        }, HttpStatus.UNPROCESSABLE_ENTITY);
+      }
+      if (error instanceof NotFoundException) {
+        throw new HttpException({
+          message: error.message,
         }, HttpStatus.NOT_FOUND);
       }
       

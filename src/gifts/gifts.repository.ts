@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { Gift, Prisma } from '@prisma/client';
 import { CreateGiftDto } from './dto/create-gift.dto';
 import { UpdateGiftDto } from './dto/update-gift.dto';
+import { RatingGiftDto } from './dto/rating-gift.dto';
 // import { AppException } from 'src/utils/exception/app.exception';
 
 @Injectable()
@@ -96,6 +97,32 @@ export class GiftsRepositoryImpl implements GiftsRepository {
         data: {
           ...dto,
           rating: new Prisma.Decimal(dto.rating),
+        },
+      });
+    } catch (error) {
+      if (error.code === 'P2025') {
+        throw new NotFoundException();
+      }
+
+      throw error;
+    }
+  }
+
+  async insertRate(id: string, dto: RatingGiftDto, userId: string): Promise<void> {
+    try {
+      await this.prisma.giftRates.create({
+        data: {
+          ...dto,
+          gift: {
+            connect: {
+              uuid: id,
+            },
+          },
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
         },
       });
     } catch (error) {

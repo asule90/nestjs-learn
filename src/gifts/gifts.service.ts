@@ -1,4 +1,4 @@
-import { Inject, Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { GiftsService } from './gifts.service.interface';
 import { Gift } from '@prisma/client';
 import { QueryGiftDto } from './dto/query-gift.dto';
@@ -6,6 +6,7 @@ import { GiftsRepository } from './gifts.repository.interface';
 import { CreateGiftDto } from './dto/create-gift.dto';
 import { UpdateGiftDto } from './dto/update-gift.dto';
 import { plainToInstance } from 'class-transformer';
+import { RatingGiftDto } from './dto/rating-gift.dto';
 
 @Injectable()
 export class GiftsServiceImpl implements GiftsService {
@@ -57,5 +58,31 @@ export class GiftsServiceImpl implements GiftsService {
     entity.stock -= qty;
     const partialEntity: Partial<Gift> = entity;
     return this.repo.partialUpdate(id, partialEntity);
+  }
+
+  async rate(id: string, dto: RatingGiftDto, userID: string): Promise<Gift> {
+    let entity: Gift;
+    try {
+      entity = await this.repo.selectOne(id);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException('Gift was not found');
+      }
+
+      throw error;
+    }
+
+    try {
+      await this.repo.insertRate(entity.uuid, dto, userID);
+      
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException('user was not found');
+      }
+
+      throw error;
+    }
+
+    return entity;
   }
 }

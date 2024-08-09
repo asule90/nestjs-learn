@@ -2,6 +2,7 @@ import { Gift } from '@prisma/client';
 import { QueryGiftDto } from './dto/query-gift.dto';
 import { CreateGiftDto } from './dto/create-gift.dto';
 import { UpdateGiftDto } from './dto/update-gift.dto';
+import { RatingGiftDto } from './dto/rating-gift.dto';
 
 export interface GiftsService {
   create(dto: CreateGiftDto): Promise<Gift>;
@@ -11,4 +12,5 @@ export interface GiftsService {
   update(id: string, dto: CreateGiftDto): Promise<Gift>;
   remove(id: string): Promise<void>;
   redeem(id: string, qty: number): Promise<Gift>;
+  rate(id: string, dto: RatingGiftDto, userId: string): Promise<Gift>;
 }
