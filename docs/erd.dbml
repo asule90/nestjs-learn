@@ -1,0 +1,43 @@
+enum EnumBadge {
+    HOT
+    NEW
+    BEST_SELLER
+}
+
+Table gift {
+  uuid varchar( 255 ) [pk]
+  name varchar( 100 )
+  description text
+  stock int
+  price int
+  reviewCount int
+  image1 text
+  badge EnumBadge
+  rating decimal( 2,1 )
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+Table user {
+  id varchar( 255 ) [pk]
+  email varchar( 100 ) 
+  username varchar( 100 )
+  password varchar( 255 )
+  name varchar( 100 )
+  createdAt timestamp
+  updatedAt timestamp
+
+	indexes {
+    username [unique]
+    email [unique]
+	}
+}
+
+
+Table gift_rates {
+  id varchar( 255 ) [pk]
+  giftId varchar( 255 ) [ref: > gift.uuid]
+  userId varchar( 255 ) [ref: > user.id]
+  rating int
+  comment text
+}

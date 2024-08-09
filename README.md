@@ -20,8 +20,15 @@ Gift service API,
 
 
 ## Preparation  
-assuming you already have database named `postgre`
+make sure you have postgresql database named `postgre`.  
+
+if you have database desktop client 
 just import `docs/db_schema.sql` file.  
+
+or use pg_dump:
+```bash
+$ pg_dump -U <dbuser> -h <host> -d <dbname> < ./docs/db_schema.sql
+```
 
 if you use vscode, you can easily run with devcontainer just by installing devcontainer extension.
 
@@ -59,3 +66,8 @@ $ npm run start:prod
 
 ## Swagger
 when you run the app, it will server swagger page on `http://localhost:3000/api`
+
+## ERD
+[erd.dbml](./docs/erd.dbml)
+
+![ERD](./docs/ERD.png "ERD")
