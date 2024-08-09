@@ -9,20 +9,41 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Gift service API, 
 
-## Installation
+### Features:
+- create user
+- login
+- CRUD gift
+- rate gift: will increate `gift.review_count` and calculate `gift.rating`
+- redeem gift
+
+
+## Preparation  
+assuming you already have database named `postgre`
+just import `docs/db_schema.sql` file.  
+
+if you use vscode, you can easily run with devcontainer just by installing devcontainer extension.
+
+copy `.env.example` to `.env` and adjust the value as you need.
 
 ```bash
-$ npm install
-# if you have problem with bcyprt:
-$ npm install node-gyp 
+# db migrate
+$ npm run migrate
+
+# db seed
+$ npx prisma db seed
+# check ./prisma/seed/seed.ts
 ```
 
 ## Running the app
 
 ```bash
 # development
+$ npm install
+# if you have problem with bcyprt:
+$ npm install node-gyp 
+
 $ npm run start
 
 # watch mode
@@ -32,35 +53,9 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
+## Postman
+[postman-collection.json](./docs/RollingGlorry.postman_collection.json)  
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## TODO
-
-- [ ] DB migration
-
-
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+## Swagger
+when you run the app, it will server swagger page on `http://localhost:3000/api`
