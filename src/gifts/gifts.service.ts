@@ -7,12 +7,17 @@ import { CreateGiftDto } from './dto/create-gift.dto';
 import { UpdateGiftDto } from './dto/update-gift.dto';
 import { RatingGiftDto } from './dto/rating-gift.dto';
 import { Decimal } from '@prisma/client/runtime/library';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { AppException } from 'utils/exception/app.exception';
 
 @Injectable()
 export class GiftsServiceImpl implements GiftsService {
   // private readonly logger = new Logger(GiftsServiceImpl.name);
 
-  constructor(@Inject('GiftsRepository') private repo: GiftsRepository) {}
+  constructor(
+    @Inject('GiftsRepository') private repo: GiftsRepository,
+    private prisma: PrismaService
+  ) {}
 
   create(dto: CreateGiftDto): Promise<Gift> {
     return this.repo.create(dto);
@@ -72,32 +77,34 @@ export class GiftsServiceImpl implements GiftsService {
       throw error;
     }
 
-
-    try {
-      await this.repo.insertRate(entity.uuid, dto, userID);
-      
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw new NotFoundException('user was not found');
+    return this.prisma.$transaction(async (prisma) => {
+      try {
+        await this.repo.insertRate(entity.uuid, dto, userID, prisma);
+        
+      } catch (error) {
+        if (error instanceof NotFoundException) {
+          throw new NotFoundException('user was not found');
+        }
+  
+        throw error;
       }
+  
+      //calculate rating
+      entity.reviewCount++;
+  
+      const ratings = await this.repo.selectAllRating(entity.uuid, prisma);
+      const averageRate = this.calculateAverageRate(ratings);
+      const roundedRate = Math.round(averageRate * 2) / 2
+      const averageRateDecimal = new Decimal(roundedRate);
+      
+      entity.rating = averageRateDecimal;
+  
+      const partialEntity: Partial<Gift> = entity;
+      entity = await this.repo.partialUpdate(id, partialEntity, prisma);
+  
+      return entity;
 
-      throw error;
-    }
-
-    //calculate rating
-    entity.reviewCount++;
-
-    const ratings = await this.repo.selectAllRating(entity.uuid);
-    const averageRate = this.calculateAverageRate(ratings);
-    const roundedRate = Math.round(averageRate * 2) / 2
-    const averageRateDecimal = new Decimal(roundedRate);
-
-    entity.rating = averageRateDecimal;
-
-    const partialEntity: Partial<Gift> = entity;
-    this.repo.partialUpdate(id, partialEntity);
-
-    return entity;
+    });
   }
 
   private calculateAverageRate(items: GiftRates[]): number {

@@ -9,6 +9,16 @@
 		{
 			"name": "create gift",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -21,14 +31,9 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/gifts",
-					"protocol": "http",
+					"raw": "{{server_local}}gifts",
 					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"gifts"
+						"{{server_local}}gifts"
 					]
 				}
 			},
@@ -37,11 +42,21 @@
 		{
 			"name": "PUT",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"dfaf\",\n    \"description\": \"asfasf\",\n    \"stock\": 12,\n    \"price\": 5000,\n    \"review_count\": 5,\n    \"image_1\": \"https://loremflickr.com/640/480?lock=5385899292491776\",\n    \"badge\": null,\n    \"rating\": \"0.1\"\n}",
+					"raw": "{\n        \"name\": \"Bespoke Granite Keyboard\",\n        \"description\": \"blalala tametsi adstringo debeo denique vereor nam cunae alius vehemens. Agnosco cibo teres tabernus et commemoro voro error spero. Ter canonicus stella.\",\n        \"stock\": 62,\n        \"price\": 15602486,\n        \"image_1\": \"https://loremflickr.com/640/480?lock=36276570947584\",\n        \"badge\": \"NEW\",\n        \"rating\": \"0.9\"\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -49,15 +64,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/gifts/53036ddf-c407-4407-944b-cd20631c6ac4",
-					"protocol": "http",
+					"raw": "{{server_local}}gifts/884f7cf0-30f8-4576-9da7-77f61d05cb1f",
 					"host": [
-						"localhost"
+						"{{server_local}}gifts"
 					],
-					"port": "3000",
 					"path": [
-						"gifts",
-						"53036ddf-c407-4407-944b-cd20631c6ac4"
+						"884f7cf0-30f8-4576-9da7-77f61d05cb1f"
 					]
 				}
 			},
@@ -66,6 +78,16 @@
 		{
 			"name": "PATCH",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PATCH",
 				"header": [],
 				"body": {
@@ -78,15 +100,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/gifts/53036ddf-c407-4407-944b-cd20631c6ac4",
-					"protocol": "http",
+					"raw": "{{server_local}}gifts/884f7cf0-30f8-4576-9da7-77f61d05cb1f",
 					"host": [
-						"localhost"
+						"{{server_local}}gifts"
 					],
-					"port": "3000",
 					"path": [
-						"gifts",
-						"53036ddf-c407-4407-944b-cd20631c6ac4"
+						"884f7cf0-30f8-4576-9da7-77f61d05cb1f"
 					]
 				}
 			},
@@ -95,6 +114,16 @@
 		{
 			"name": "redeem",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt_token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -107,15 +136,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/gifts/7da92793-ce08-4454-b38f-503db2f570bf/redeem",
-					"protocol": "http",
+					"raw": "{{server_local}}gifts/884f7cf0-30f8-4576-9da7-77f61d05cb1f/redeem",
 					"host": [
-						"localhost"
+						"{{server_local}}gifts"
 					],
-					"port": "3000",
 					"path": [
-						"gifts",
-						"7da92793-ce08-4454-b38f-503db2f570bf",
+						"884f7cf0-30f8-4576-9da7-77f61d05cb1f",
 						"redeem"
 					]
 				}
@@ -130,7 +156,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyYmY1M2ZiZi0wM2VkLTQ2ZmUtYTZlNC1hZDI5Y2NlNDQ4NDciLCJ1c2VybmFtZSI6Im1hcmlhIiwiaWF0IjoxNzIzMjIwNDI5LCJleHAiOjE3MjMyMjQwMjl9.l3V4GbZxL-5Wd6FKzWJjhkWSiLnykbuxSFx0lSRMbXI",
+							"value": "{{jwt_token}}",
 							"type": "string"
 						}
 					]
@@ -139,7 +165,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"rating\": 2,\n    \"comment\": \"rate\"\n}",
+					"raw": "{\n    \"rating\": 4,\n    \"comment\": \"rate\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -147,15 +173,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/gifts/eeda25e3-80ed-4ae9-ab2c-31ae2e1fd72f/rating",
-					"protocol": "http",
+					"raw": "{{server_local}}gifts/884f7cf0-30f8-4576-9da7-77f61d05cb1f/rating",
 					"host": [
-						"localhost"
+						"{{server_local}}gifts"
 					],
-					"port": "3000",
 					"path": [
-						"gifts",
-						"eeda25e3-80ed-4ae9-ab2c-31ae2e1fd72f",
+						"884f7cf0-30f8-4576-9da7-77f61d05cb1f",
 						"rating"
 					]
 				}
@@ -177,14 +200,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/auth/login",
-					"protocol": "http",
+					"raw": "{{server_local}}auth/login",
 					"host": [
-						"localhost"
+						"{{server_local}}auth"
 					],
-					"port": "3000",
 					"path": [
-						"auth",
 						"login"
 					]
 				}
@@ -206,14 +226,9 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/users",
-					"protocol": "http",
+					"raw": "{{server_local}}users",
 					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"users"
+						"{{server_local}}users"
 					]
 				}
 			},
@@ -225,23 +240,20 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/gifts?sort_by=updatedAt&sort_order=desc",
-					"protocol": "http",
+					"raw": "{{server_local}}gifts",
 					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"gifts"
+						"{{server_local}}gifts"
 					],
 					"query": [
 						{
 							"key": "sort_by",
-							"value": "updatedAt"
+							"value": "updatedAt",
+							"disabled": true
 						},
 						{
 							"key": "sort_order",
-							"value": "desc"
+							"value": "desc",
+							"disabled": true
 						}
 					]
 				}
@@ -254,15 +266,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/gifts/7da92793-ce08-4454-b38f-503db2f570bf",
-					"protocol": "http",
+					"raw": "{{server_local}}gifts/884f7cf0-30f8-4576-9da7-77f61d05cb1f",
 					"host": [
-						"localhost"
+						"{{server_local}}gifts"
 					],
-					"port": "3000",
 					"path": [
-						"gifts",
-						"7da92793-ce08-4454-b38f-503db2f570bf"
+						"884f7cf0-30f8-4576-9da7-77f61d05cb1f"
 					]
 				}
 			},
@@ -274,19 +283,55 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/gifts/53036ddf-c407-4407-944b-cd20631c6ac4",
-					"protocol": "http",
+					"raw": "{{server_local}}gifts/53036ddf-c407-4407-944b-cd20631c6ac4",
 					"host": [
-						"localhost"
+						"{{server_local}}gifts"
 					],
-					"port": "3000",
 					"path": [
-						"gifts",
 						"53036ddf-c407-4407-944b-cd20631c6ac4"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server_local",
+			"value": "localhost:3000/",
+			"type": "string"
+		},
+		{
+			"key": "server_cloud",
+			"value": "https://rgb.asepsulaeman.com/",
+			"type": "string"
+		},
+		{
+			"key": "jwt_token",
+			"value": "token",
+			"type": "string"
 		}
 	]
 }

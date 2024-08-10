@@ -56,9 +56,10 @@ export class GiftsRepositoryImpl implements GiftsRepository {
     }
   }
 
-  async partialUpdate(id: string, entity: Partial<Gift>): Promise<Gift>{
+  async partialUpdate(id: string, entity: Partial<Gift>, prismaClient?: Prisma.TransactionClient | PrismaService): Promise<Gift>{
     try {
-      return await this.prisma.gift.update({
+      const actualPrisma = prismaClient ?? this.prisma;
+      return await actualPrisma.gift.update({
         where: { uuid: id },
         data: {
           ...entity,
@@ -104,9 +105,10 @@ export class GiftsRepositoryImpl implements GiftsRepository {
     }
   }
 
-  async insertRate(id: string, dto: RatingGiftDto, userId: string): Promise<void> {
+  async insertRate(id: string, dto: RatingGiftDto, userId: string, prismaClient?: Prisma.TransactionClient | PrismaService): Promise<void> {
     try {
-      await this.prisma.giftRates.create({
+      const actualPrisma = prismaClient ?? this.prisma;
+      await actualPrisma.giftRates.create({
         data: {
           ...dto,
           gift: {
@@ -130,8 +132,9 @@ export class GiftsRepositoryImpl implements GiftsRepository {
     }
   }
 
-  async selectAllRating(id: string): Promise<GiftRates[]> {
-    const data = await this.prisma.giftRates.findMany({
+  async selectAllRating(id: string, prismaClient?: Prisma.TransactionClient | PrismaService): Promise<GiftRates[]> {
+    const actualPrisma = prismaClient ?? this.prisma;
+    const data = await actualPrisma.giftRates.findMany({
         where: {
           giftId: id
         },
