@@ -8,7 +8,7 @@ import { UpdateGiftDto } from './dto/update-gift.dto';
 import { RatingGiftDto } from './dto/rating-gift.dto';
 import { Decimal } from '@prisma/client/runtime/library';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { AppException } from 'utils/exception/app.exception';
+import { AppException } from 'src/utils/exception/app.exception';
 
 @Injectable()
 export class GiftsServiceImpl implements GiftsService {

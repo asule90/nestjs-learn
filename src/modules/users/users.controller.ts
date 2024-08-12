@@ -1,7 +1,7 @@
 import { Body, Controller, HttpException, HttpStatus, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { SuccessResponseDTO } from 'utils/http/response.dto';
+import { SuccessResponseDTO } from 'src/utils/http/response.dto';
 import { hash } from '../../utils/Security';
 import { ApiTags } from '@nestjs/swagger';
 

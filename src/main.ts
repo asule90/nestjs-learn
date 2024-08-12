@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { AllExceptionFilter } from '../utils/exception/all-exception.filter';
-import { SnakeCaseInterceptor } from '../utils/http/SnakeCaseInterceptor';
+import { AllExceptionFilter } from './utils/exception/all-exception.filter';
+import { SnakeCaseInterceptor } from './utils/http/SnakeCaseInterceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {

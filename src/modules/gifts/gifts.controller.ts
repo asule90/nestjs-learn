@@ -25,12 +25,12 @@ import {
   ErrorResponseDTO,
   PagingResponseDTO,
   SuccessResponseDTO,
-} from 'utils/http/response.dto';
+} from 'src/utils/http/response.dto';
 import { CreateGiftDto } from './dto/create-gift.dto';
 import { UpdateGiftDto } from './dto/update-gift.dto';
 import { RedeemGiftDto } from './dto/redeem-gift.dto';
 import { RatingGiftDto } from './dto/rating-gift.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/modules/auth/auth.guard';
 import { ApiTags } from '@nestjs/swagger';
 
 

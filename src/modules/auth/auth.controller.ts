@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, HttpException, HttpStatus, Inject, Logger, NotFoundException, Post, UnprocessableEntityException } from '@nestjs/common';
 import { UserLoginDto } from './dto/login-user.dto';
 import { AuthService } from './auth.service.interface';
-import { SuccessResponseDTO } from 'utils/http/response.dto';
+import { SuccessResponseDTO } from 'src/utils/http/response.dto';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
 

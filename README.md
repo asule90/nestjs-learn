@@ -98,6 +98,10 @@ $ docker compose up
 $ docker compose up -d
 ```
 
+## Testing
+```
+npm run test
+```
 
 ## Postman
 [postman-collection.json](./docs/RollingGlorry.postman_collection.json)  
