@@ -3,24 +3,10 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
-// This should be a real class/interface representing a user entity
-// export type User = any;
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
-  // private readonly users = [
-  //   {
-  //     userId: 1,
-  //     username: 'john',
-  //     password: 'changeme',
-  //   },
-  //   {
-  //     userId: 2,
-  //     username: 'maria',
-  //     password: 'guess',
-  //   },
-  // ];
 
   async findOne(id: string): Promise<User | undefined> {
     try {
